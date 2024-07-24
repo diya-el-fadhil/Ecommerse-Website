@@ -1,0 +1,73 @@
+.admin-dashboard {
+    width: 50%;
+    min-height: 70vh;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.admin-dashboard h1 {
+    color: #404040;
+    margin-bottom: 20px;
+}
+
+.admin-dashboard p {
+    color: #5c5c5c;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.admin-dashboard button {
+    color: white;
+    background: #404040;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+.admin-dashboard button:hover {
+    background: #333;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.user-table thead {
+    background: #c3c3c3;
+    color: white;
+}
+
+.user-table th, .user-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.user-table button {
+    color: white;
+    background: #ff4141;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.user-table button:hover {
+    background: #e03e3e;
+}

@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'poppins';
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+/* Light theme */
+body.light-theme {
+  --background-color: #F2C744;
+  --text-color: #333;
+}
+
+/* Dark theme */
+body.dark-theme {
+  --background-color: #333;
+  --text-color: #fff;
+}
