@@ -6,7 +6,6 @@ const Profile = () => {
     const [error, setError] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [editedUser, setEditedUser] = useState(null);
-    const [profilePhoto, setProfilePhoto] = useState(null);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -46,26 +45,13 @@ const Profile = () => {
     const handleSave = async () => {
         try {
             const token = localStorage.getItem('auth-token');
-            const formData = new FormData();
-            
-            // Append user data
-            Object.keys(editedUser).forEach(key => {
-                formData.append(key, editedUser[key]);
-            });
-
-            // Append profile photo if it exists
-            if (profilePhoto) {
-                formData.append('profilePhoto', profilePhoto);
-            }
-
-            console.log('FormData:', formData);
-
             const response = await fetch('http://localhost:4000/profile/update', {
                 method: 'PUT',
                 headers: {
+                    'Content-Type': 'application/json',
                     'auth-token': token,
                 },
-                body: formData,
+                body: JSON.stringify(editedUser),
             });
 
             if (!response.ok) {
@@ -77,7 +63,6 @@ const Profile = () => {
             setUser(updatedUser);
             setIsEditing(false);
             setEditedUser(null);
-            setProfilePhoto(null);
         } catch (error) {
             console.error('Error updating profile:', error);
             setError(error.message);
@@ -87,17 +72,10 @@ const Profile = () => {
     const handleCancel = () => {
         setIsEditing(false);
         setEditedUser(null);
-        setProfilePhoto(null);
     };
 
     const handleChange = (e) => {
         setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
-    };
-
-    const handlePhotoChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            setProfilePhoto(e.target.files[0]);
-        }
     };
 
     if (error) {
@@ -114,27 +92,6 @@ const Profile = () => {
             <div className="profile-info">
                 {isEditing ? (
                     <>
-                        <div className="profile-photo-container">
-                            {profilePhoto ? (
-                                <img
-                                    src={URL.createObjectURL(profilePhoto)}
-                                    alt="Profile Preview"
-                                    className="profile-photo-preview"
-                                />
-                            ) : user.profilePhotoUrl ? (
-                                <img
-                                    src={user.profilePhotoUrl}
-                                    alt="Current Profile"
-                                    className="profile-photo"
-                                />
-                            ) : null}
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handlePhotoChange}
-                                className="photo-input"
-                            />
-                        </div>
                         <input
                             name="name"
                             value={editedUser.name}
@@ -170,15 +127,6 @@ const Profile = () => {
                     </>
                 ) : (
                     <>
-                        <div className="profile-photo-container">
-                            {user.profilePhotoUrl && (
-                                <img
-                                    src={user.profilePhotoUrl}
-                                    alt="Profile"
-                                    className="profile-photo"
-                                />
-                            )}
-                        </div>
                         <p><strong>Name:</strong> {user.name}</p>
                         <p><strong>Email:</strong> {user.email}</p>
                         <p><strong>Location:</strong> {user.location || 'Not specified'}</p>
