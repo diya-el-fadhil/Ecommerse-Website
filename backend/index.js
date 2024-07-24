@@ -55,6 +55,8 @@ const Users = mongoose.model("Users", {
   name: { type: String },
   email: { type: String, unique: true },
   password: { type: String },
+  location: { type: String }, // Added field
+  mobileNumber: { type: String }, // Added field
   cartData: { type: Object },
   date: { type: Date, default: Date.now }
 });
@@ -203,6 +205,28 @@ app.get('/profile', fetchuser, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Update User Profile
+app.put('/profile/update', fetchuser, async (req, res) => {
+  try {
+    const { name, email, location, mobileNumber } = req.body;
+
+    const updatedUser = await Users.findByIdAndUpdate(
+      req.user.id,
+      { name, email, location, mobileNumber },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(updatedUser);
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");
